@@ -12,7 +12,9 @@ let currentVideoTitle = '';
 let episodesReversed = false;
 
 // 页面初始化
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
+    API_SITES = await fetchRemoteConfigWithCache() 
+
     // 初始化API复选框
     initAPICheckboxes();
     
@@ -27,8 +29,15 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // 设置默认API选择（如果是第一次加载）
     if (!localStorage.getItem('hasInitializedDefaults')) {
+
+        const sites_key = Object.keys(API_SITES)
+        selectedAPIs = [sites_key[0], sites_key[1]]
+
+        // 随机获取接口
+
         // 仅选择黑木耳源和豆瓣资源
-        selectedAPIs = ["heimuer", "dbzy"];
+        // selectedAPIs = ["heimuer", "dbzy"];
+
         localStorage.setItem('selectedAPIs', JSON.stringify(selectedAPIs));
         
         // 默认选中过滤开关
